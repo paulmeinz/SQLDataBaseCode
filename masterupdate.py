@@ -1,0 +1,32 @@
+#! /usr/bin/python
+
+import csv
+import numpy
+import pdb
+import sqlite3
+import os
+import update as up
+
+### master function that updates the dotprobe database ###
+
+def updatedb():
+	"""
+	Function for updating the dotprobe database and relevant tables
+	"""		
+	
+	data_dict = up.preload_data()
+			
+	dictnames = data_dict.viewkeys()
+	print len(dictnames)
+	
+	# for each name/id in the dictionary created in separate_data function
+	# check to see if it is already included in the database dotprobe table
+	# if not add it with the cleandata_updatedb function	
+	for name in dictnames:
+		up.cleandata_updatedb(data_dict, name)
+	
+	up.biasscores()
+
+updatedb()
+#up.uploadclassificationkeys()
+
